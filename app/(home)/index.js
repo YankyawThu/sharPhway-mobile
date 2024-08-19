@@ -7,47 +7,52 @@ export default function Home() {
     const navigation = useNavigation();
 
     const mockData = [
-        {id: 1, currency: 'Baht', buy: 710, sell: 690, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 2, currency: 'Baht', buy: 695, sell: 680, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 3, currency: 'Baht', buy: 695, sell: 675, base_amount: 100000, createdAt: 'a hour ago'},
-        {id: 4, currency: 'Baht', buy: 670, sell: 650, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 5, currency: 'Baht', buy: 660, sell: 643, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 6, currency: 'Baht', buy: 665, sell: 650, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 7, currency: 'Baht', buy: 687, sell: 669, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 8, currency: 'Baht', buy: 740, sell: 720, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 9, currency: 'Baht', buy: 620, sell: 600, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 10, currency: 'Baht', buy: 540, sell: 520, base_amount: 100000, createdAt: 'a few minutes ago'}
+        {id: 10, currency: 'Baht', sell: 710.12, buy: 690.12, base_amount: 100000, createdAt: 'a few minutes ago'},
+        {id: 9, currency: 'Baht', sell: 695, buy: 680, base_amount: 100000, createdAt: 'a few minutes ago'},
+        {id: 8, currency: 'Baht', sell: 695, buy: 675, base_amount: 100000, createdAt: 'a few minutes ago'},
+        {id: 7, currency: 'Baht', sell: 670, buy: 650, base_amount: 100000, createdAt: 'a few minutes ago'},
+        {id: 6, currency: 'Baht', sell: 660, buy: 643, base_amount: 100000, createdAt: 'a few minutes ago'},
+        {id: 5, currency: 'Baht', sell: 665, buy: 650, base_amount: 100000, createdAt: 'a few minutes ago'},
+        {id: 4, currency: 'Baht', sell: 687, buy: 669, base_amount: 100000, createdAt: 'a few minutes ago'},
+        {id: 3, currency: 'Baht', sell: 740, buy: 720, base_amount: 100000, createdAt: 'a few minutes ago'},
+        {id: 2, currency: 'Baht', sell: 620, buy: 600, base_amount: 100000, createdAt: 'a few minutes ago'},
+        {id: 1, currency: 'Baht', sell: 540, buy: 520, base_amount: 100000, createdAt: 'a few minutes ago'}
     ]
 
     const render = ({item}) => {
         let sign = ''
+        let rate = ''
         mockData.map((exchange, i) => {
             if(exchange.id == item.id) {
                 let key = i == mockData.length-1 ? i : i+1
-                if(item.sell >= mockData[key].sell) {
-                    sign = <Image source={require('../../assets/icons/rateUp.svg')} style={styles.rateIcon} />
+                if(item.buy >= mockData[key].buy) {
+                    rate = <Text style={{color: '#00BD55'}}>{`${parseFloat((((mockData[key].buy / item.buy) * 100) - 100).toFixed(2))} %`}</Text>
+                    sign = <Image source={require('../../assets/icons/rateDown.svg')} style={styles.rateIcon} />
                 }
                 else {
-                    sign = <Image source={require('../../assets/icons/rateDown.svg')} style={styles.rateIcon} />
+                    rate = <Text style={{color: '#FF001C'}}>{`+${parseFloat((((mockData[key].buy / item.buy) * 100) - 100).toFixed(2))} %`}</Text>
+                    sign = <Image source={require('../../assets/icons/rateUp.svg')} style={styles.rateIcon} />
                 }
             }
         })
         return (
             <View style={styles.recordRow} key={item.id}>
-                <Text style={styles.recordRowText}>{sign}</Text>
-                <Text style={styles.recordRowText}>{item.buy}</Text>
-                <Text style={styles.recordRowText}>{item.sell}</Text>
-                <Text style={{width: 90, color: '#9F9F9F', fontSize: 12}}>{item.createdAt}</Text>
+                <Text style={[styles.recordRowText, {flexBasis: '15%'}]}>{sign}</Text>
+                <Text style={[styles.recordRowText, {flexBasis: '23%'}]}>{rate}</Text>
+                <Text style={[styles.recordRowText, {flexBasis: '20%'}]}>{item.buy}</Text>
+                <Text style={[styles.recordRowText, {flexBasis: '20%'}]}>{item.sell}</Text>
+                <Text style={{width: 90, color: '#9F9F9F', fontSize: 12, flexBasis: '22%'}}>{item.createdAt}</Text>
             </View>
         )
     }
 
     const renderHeader = () => (
         <View style={styles.recordHeader}>
-            <Text style={styles.recordHeaderText}></Text>
-            <Text style={styles.recordHeaderText}>BUY</Text>
-            <Text style={styles.recordHeaderText}>SELL</Text>
-            <Text style={[styles.recordHeaderText, {width: 90}]}>TIME</Text>
+            <Text style={[styles.recordHeaderText, {flexBasis: '15%'}]}></Text>
+            <Text style={[styles.recordHeaderText, {flexBasis: '23%'}]}>RATE</Text>
+            <Text style={[styles.recordHeaderText, {flexBasis: '20%'}]}>BUY</Text>
+            <Text style={[styles.recordHeaderText, {flexBasis: '20%'}]}>SELL</Text>
+            <Text style={[styles.recordHeaderText, {width: 90, flexBasis: '22%'}]}>TIME</Text>
         </View>
     )
 
@@ -214,8 +219,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15
     },
     recordHeaderText: {
-        flexBasis: '25%',
-        width: 45,
         textAlign: 'left',
         fontSize: 12,
         color: '#9F9F9F'
@@ -231,13 +234,11 @@ const styles = StyleSheet.create({
         borderColor: '#E9E9E9',
     },
     recordRowText: {
-        flexBasis: '25%',
-        width: 45,
         textAlign: 'left',
         fontWeight: '500',
     },
     rateIcon: {
-        width: 35,
-        height: 35
+        width: 30,
+        height: 30
     }
 })
