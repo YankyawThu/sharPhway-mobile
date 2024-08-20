@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TouchableOpacity, TextInput, FlatList, ScrollView, SafeAreaView, RefreshControl } from "react-native"
+import { Text, View, StyleSheet, TouchableOpacity, TextInput, FlatList, ScrollView, SafeAreaView, RefreshControl, Switch } from "react-native"
 import { Link, useNavigation } from "expo-router"
 import { useState, useEffect, useRef, useCallback } from "react"
 import { Image } from 'expo-image'
@@ -8,6 +8,7 @@ export default function Home() {
     const navigation = useNavigation()
     const ref = useRef(null)
     const [refreshing, setRefreshing] = useState(false)
+    const [base, setBase] = useState(true)
 
     useScrollToTop(
         useRef({
@@ -80,6 +81,10 @@ export default function Home() {
 
     const refresh = <RefreshControl refreshing={refreshing} onRefresh={fetchData} />
 
+    const handleBase = val => {
+        setBase(prevstate => !prevstate)
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <Image source={require('../../assets/images/logo.png')} style={styles.logo} />
@@ -116,8 +121,14 @@ export default function Home() {
                         </View>
                     </View>
                 </View>
-                <View style={styles.oldRecords}>
-                    <Text style={styles.header2}>Records</Text>
+                <View style={styles.oldRecordsBox}>
+                    <View style={styles.recordsHeader}>
+                        <Text style={styles.header2}>Records</Text>
+                        <View style={styles.oldRecordsRight}>
+                            <Text style={styles.switchBaseText}>Base 100000 Ks</Text>
+                            <Switch style={styles.switchBase} trackColor={{false: '#000000', true: '#F5A524'}} onValueChange={handleBase} value={base} />
+                        </View>
+                    </View>
                     <FlatList scrollEnabled={false} data={mockData} keyExtractor={item => item.id.toString()} renderItem={render} ListHeaderComponent={renderHeader} />
                 </View>
             </ScrollView>
@@ -172,8 +183,8 @@ const styles = StyleSheet.create({
         marginRight: 4
     },
     kyatIcon: {
-        width: 25,
-        height: 25,
+        width: 26,
+        height: 26,
         marginLeft: 4,
     },
     exchangeCardBody: {
@@ -209,13 +220,13 @@ const styles = StyleSheet.create({
         fontWeight: '500',
     },
     exchangeSendInput: {
-        width: 100,
+        width: 110,
         height: 40,
-        paddingHorizontal: 5,
+        paddingHorizontal: 10,
         fontSize: 20,
         fontWeight: '500',
-        backgroundColor: '#ffffff',
-        borderRadius: 10,
+        backgroundColor: '#FFFFFF',
+        borderRadius: '50%',
     },
     exchangeSendBox: {
         flexDirection: 'row',
@@ -229,13 +240,30 @@ const styles = StyleSheet.create({
     exchangeCardHeaderRightText: {
         fontSize: 15
     },
-    oldRecords: {
-        marginHorizontal: 15
+    oldRecordsBox: {
+        marginHorizontal: 15,
+    },
+    recordsHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
     header2: {
         fontSize: 25,
         fontWeight: '700',
         paddingVertical: 20
+    },
+    oldRecordsRight: {
+        flexDirection: 'row',
+        gap: 2,
+        alignItems: 'center'
+    },
+    switchBase: {
+        transform: [{scale: 0.6}]
+    },
+    switchBaseText: {
+        fontSize: 12,
+        color: '#9F9F9F'
     },
     recordHeader: {
         flexDirection: 'row',
