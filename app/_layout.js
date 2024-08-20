@@ -1,5 +1,5 @@
-import { Tabs, useNavigation } from "expo-router";
-import { Image } from 'expo-image';
+import { Tabs, useNavigation } from "expo-router"
+import { Image } from 'expo-image'
 
 export default function TabLayout() {
 
@@ -40,5 +40,5 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
-  );
+  )
 }

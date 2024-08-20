@@ -1,4 +1,4 @@
-import { Stack } from "expo-router";
+import { Stack } from "expo-router"
 
 export default function NewsLayout() {
   return (
@@ -6,5 +6,5 @@ export default function NewsLayout() {
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="detail" />
     </Stack>
-  );
+  )
 }

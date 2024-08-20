@@ -1,4 +1,4 @@
-import { Stack } from "expo-router";
+import { Stack } from "expo-router"
 
 export default function ExchangeLayout() {
   return (
@@ -8,5 +8,5 @@ export default function ExchangeLayout() {
       }}
       />
     </Stack>
-  );
+  )
 }

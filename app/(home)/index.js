@@ -1,12 +1,27 @@
-import { Text, View, StyleSheet, TouchableOpacity, TextInput, FlatList, ScrollView, SafeAreaView } from "react-native"
+import { Text, View, StyleSheet, TouchableOpacity, TextInput, FlatList, ScrollView, SafeAreaView, RefreshControl } from "react-native"
 import { Link, useNavigation } from "expo-router"
-import { useEffect } from "react";
-import { Image } from 'expo-image';
+import { useState, useEffect, useRef, useCallback } from "react"
+import { Image } from 'expo-image'
+import { useScrollToTop, useFocusEffect } from '@react-navigation/native'
 
 export default function Home() {
-    const navigation = useNavigation();
+    const navigation = useNavigation()
+    const ref = useRef(null)
+    const [refreshing, setRefreshing] = useState(false)
+
+    useScrollToTop(
+        useRef({
+            scrollToTop: () => {
+                ref.current?.scrollTo({ y: 0, animated: true })
+            }
+        })
+    )
 
     const mockData = [
+        {id: 14, currency: 'Baht', sell: 670, buy: 650, base_amount: 100000, createdAt: 'a few minutes ago'},
+        {id: 13, currency: 'Baht', sell: 660, buy: 643, base_amount: 100000, createdAt: 'a few minutes ago'},
+        {id: 12, currency: 'Baht', sell: 665, buy: 650, base_amount: 100000, createdAt: 'a few minutes ago'},
+        {id: 11, currency: 'Baht', sell: 687, buy: 669, base_amount: 100000, createdAt: 'a few minutes ago'},
         {id: 10, currency: 'Baht', sell: 710.12, buy: 690.12, base_amount: 100000, createdAt: 'a few minutes ago'},
         {id: 9, currency: 'Baht', sell: 695, buy: 680, base_amount: 100000, createdAt: 'a few minutes ago'},
         {id: 8, currency: 'Baht', sell: 695, buy: 675, base_amount: 100000, createdAt: 'a few minutes ago'},
@@ -56,10 +71,19 @@ export default function Home() {
         </View>
     )
 
+    const fetchData = useCallback(() => {
+        setRefreshing(true)
+        setTimeout(() => {
+            setRefreshing(false)
+          }, 2000)
+    }, [])
+
+    const refresh = <RefreshControl refreshing={refreshing} onRefresh={fetchData} />
+
     return (
         <SafeAreaView style={styles.container}>
             <Image source={require('../../assets/images/logo.png')} style={styles.logo} />
-            <ScrollView>
+            <ScrollView ref={ref} refreshControl={refresh} showsVerticalScrollIndicator={false}>
                 <View style={styles.exchangeCard}>
                     <View style={styles.exchangeCardHeader}>
                         <TouchableOpacity>
@@ -104,7 +128,7 @@ export default function Home() {
 const styles = StyleSheet.create({
     container: {
         flex: '1',
-        backgroundColor: '#ffffff',
+        backgroundColor: '#FFFFFF',
     },
     header: {
         fontSize: 30,
@@ -131,7 +155,7 @@ const styles = StyleSheet.create({
         height: 40,
         borderWidth: 1,
         borderRadius: '100%',
-        borderColor: '#E9E9E9',
+        borderColor: '#FFE5BC',
     },
     reverseIcon: {
         width: 24,
@@ -164,7 +188,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         height: 65,
-        backgroundColor: '#F5F5F5',
+        backgroundColor: '#FFF5E0',
         borderRadius: 15,
         paddingHorizontal: 10
     },
@@ -173,7 +197,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         height: 65,
-        backgroundColor: '#F5F5F5',
+        backgroundColor: '#FFF5E0',
         borderRadius: 15,
         paddingHorizontal: 10
     },
@@ -231,7 +255,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         paddingHorizontal: 10,
         height: 65,
-        borderColor: '#E9E9E9',
+        borderColor: '#FFCE7F',
     },
     recordRowText: {
         textAlign: 'left',
