@@ -2,13 +2,15 @@ import { Text, View, StyleSheet, TouchableOpacity, TextInput, FlatList, ScrollVi
 import { Link, useNavigation } from "expo-router"
 import { useState, useEffect, useRef, useCallback } from "react"
 import { Image } from 'expo-image'
-import { useScrollToTop, useFocusEffect } from '@react-navigation/native'
+import { useScrollToTop } from '@react-navigation/native'
+import { useTheme } from '../../context/theme'
 
 export default function Home() {
     const navigation = useNavigation()
     const ref = useRef(null)
     const [refreshing, setRefreshing] = useState(false)
     const [base, setBase] = useState(true)
+    const { theme } = useTheme()
 
     useScrollToTop(
         useRef({
@@ -52,23 +54,23 @@ export default function Home() {
             }
         })
         return (
-            <View style={styles.recordRow} key={item.id}>
+            <View style={[styles.recordRow, {borderColor: theme.colors.border}]} key={item.id}>
                 <Text style={[styles.recordRowText, {flexBasis: '15%'}]}>{sign}</Text>
                 <Text style={[styles.recordRowText, {flexBasis: '23%'}]}>{rate}</Text>
-                <Text style={[styles.recordRowText, {flexBasis: '20%'}]}>{item.buy}</Text>
-                <Text style={[styles.recordRowText, {flexBasis: '20%'}]}>{item.sell}</Text>
-                <Text style={{width: 90, color: '#9F9F9F', fontSize: 12, flexBasis: '22%'}}>{item.createdAt}</Text>
+                <Text style={[styles.recordRowText, {flexBasis: '20%', color: theme.colors.text}]}>{item.buy}</Text>
+                <Text style={[styles.recordRowText, {flexBasis: '20%', color: theme.colors.text}]}>{item.sell}</Text>
+                <Text style={{width: 90, color: theme.colors.text1, fontSize: 12, flexBasis: '22%'}}>{item.createdAt}</Text>
             </View>
         )
     }
 
     const renderHeader = () => (
         <View style={styles.recordHeader}>
-            <Text style={[styles.recordHeaderText, {flexBasis: '15%'}]}></Text>
-            <Text style={[styles.recordHeaderText, {flexBasis: '23%'}]}>RATE</Text>
-            <Text style={[styles.recordHeaderText, {flexBasis: '20%'}]}>BUY</Text>
-            <Text style={[styles.recordHeaderText, {flexBasis: '20%'}]}>SELL</Text>
-            <Text style={[styles.recordHeaderText, {width: 90, flexBasis: '22%'}]}>TIME</Text>
+            <Text style={[styles.recordHeaderText, {flexBasis: '15%', color: theme.colors.text1}]}></Text>
+            <Text style={[styles.recordHeaderText, {flexBasis: '23%', color: theme.colors.text1}]}>RATE</Text>
+            <Text style={[styles.recordHeaderText, {flexBasis: '20%', color: theme.colors.text1}]}>BUY</Text>
+            <Text style={[styles.recordHeaderText, {flexBasis: '20%', color: theme.colors.text1}]}>SELL</Text>
+            <Text style={[styles.recordHeaderText, {width: 90, flexBasis: '22%', color: theme.colors.text1}]}>TIME</Text>
         </View>
     )
 
@@ -86,46 +88,46 @@ export default function Home() {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, {backgroundColor: theme.colors.background}]}>
             <Image source={require('../../assets/images/logo.png')} style={styles.logo} />
             <ScrollView ref={ref} refreshControl={refresh} showsVerticalScrollIndicator={false}>
                 <View style={styles.exchangeCard}>
                     <View style={styles.exchangeCardHeader}>
                         <TouchableOpacity>
-                            <View style={styles.exchangeCardHeaderLeft}>
+                            <View style={[styles.exchangeCardHeaderLeft, {borderColor: theme.colors.border1}]}>
                                 <Image source={require('../../assets/icons/reverse.svg')} style={styles.reverseIcon} />
                             </View>
                         </TouchableOpacity>
                         <View style={styles.exchangeCardHeaderRight}>
                             <Image source={require('../../assets/icons/baht.svg')} style={styles.goldIcon} />
-                            <Text style={styles.exchangeCardHeaderRightText}>760</Text>
-                            <Text style={styles.exchangeCardHeaderRightText}> = </Text>
-                            <Text style={styles.exchangeCardHeaderRightText}>100000</Text>
+                            <Text style={[styles.exchangeCardHeaderRightText, {color: theme.colors.text}]}>760</Text>
+                            <Text style={[styles.exchangeCardHeaderRightText, {color: theme.colors.text}]}> = </Text>
+                            <Text style={[styles.exchangeCardHeaderRightText, {color: theme.colors.text}]}>100000</Text>
                             <Image source={require('../../assets/icons/kyat.svg')} style={styles.kyatIcon} />
                         </View>
                     </View>
                     <View style={styles.exchangeCardBody}>
-                        <View style={styles.exchangeCardBodyReceive}>
-                            <Text style={styles.exchangeCardBodyLeftText}>Receive</Text>
+                        <View style={[styles.exchangeCardBodyReceive, {backgroundColor: theme.colors.background1}]}>
+                            <Text style={[styles.exchangeCardBodyLeftText, {color: theme.colors.text}]}>Receive</Text>
                                 <View style={styles.exchangeSendBox}>
-                                    <TextInput style={styles.exchangeReceiveInput} autoCorrect={false} keyboardAppearance="default" keyboardType="number-pad" maxLength={7} textAlign="right" readOnly="true" defaultValue="760" />
-                                    <Text style={styles.exchangeBodyRightText}>Baht</Text>
+                                    <TextInput style={[styles.exchangeReceiveInput, {color: theme.colors.text}]} autoCorrect={false} keyboardAppearance="default" keyboardType="number-pad" maxLength={7} textAlign="right" readOnly="true" defaultValue="760" />
+                                    <Text style={[styles.exchangeBodyRightText, {color: theme.colors.text}]}>Baht</Text>
                                 </View>
                         </View>
-                        <View style={styles.exchangeCardBodySend}>
-                            <Text style={styles.exchangeCardBodyLeftText}>Send</Text>
+                        <View style={[styles.exchangeCardBodySend, {backgroundColor: theme.colors.background1}]}>
+                            <Text style={[styles.exchangeCardBodyLeftText, {color: theme.colors.text}]}>Send</Text>
                                 <View style={styles.exchangeSendBox}>
-                                    <TextInput style={styles.exchangeSendInput} autoCorrect={false} keyboardAppearance="default" keyboardType="number-pad" maxLength={7} textAlign="right" defaultValue="9999999" />
-                                    <Text style={styles.exchangeBodyRightText}>Ks</Text>
+                                    <TextInput style={[styles.exchangeSendInput, {color: theme.colors.text, backgroundColor: theme.colors.background}]} autoCorrect={false} keyboardAppearance="default" keyboardType="number-pad" maxLength={7} textAlign="right" defaultValue="9999999" />
+                                    <Text style={[styles.exchangeBodyRightText, {color: theme.colors.text}]}>Ks</Text>
                                 </View>
                         </View>
                     </View>
                 </View>
                 <View style={styles.oldRecordsBox}>
                     <View style={styles.recordsHeader}>
-                        <Text style={styles.header2}>Records</Text>
+                        <Text style={[styles.header2, {color: theme.colors.text}]}>Records</Text>
                         <View style={styles.oldRecordsRight}>
-                            <Text style={styles.switchBaseText}>Base 100000 Ks</Text>
+                            <Text style={[styles.switchBaseText, {color: theme.colors.text1}]}>Base 100000 Ks</Text>
                             <Switch style={styles.switchBase} trackColor={{false: '#000000', true: '#F5A524'}} onValueChange={handleBase} value={base} />
                         </View>
                     </View>
@@ -139,7 +141,6 @@ export default function Home() {
 const styles = StyleSheet.create({
     container: {
         flex: '1',
-        backgroundColor: '#FFFFFF',
     },
     header: {
         fontSize: 30,
@@ -166,7 +167,6 @@ const styles = StyleSheet.create({
         height: 40,
         borderWidth: 1,
         borderRadius: '100%',
-        borderColor: '#FFE5BC',
     },
     reverseIcon: {
         width: 24,
@@ -199,7 +199,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         height: 65,
-        backgroundColor: '#FFF5E0',
         borderRadius: 15,
         paddingHorizontal: 10
     },
@@ -208,7 +207,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         height: 65,
-        backgroundColor: '#FFF5E0',
         borderRadius: 15,
         paddingHorizontal: 10
     },
@@ -225,7 +223,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         fontSize: 20,
         fontWeight: '500',
-        backgroundColor: '#FFFFFF',
         borderRadius: '50%',
     },
     exchangeSendBox: {
@@ -263,7 +260,6 @@ const styles = StyleSheet.create({
     },
     switchBaseText: {
         fontSize: 12,
-        color: '#9F9F9F'
     },
     recordHeader: {
         flexDirection: 'row',
@@ -273,7 +269,6 @@ const styles = StyleSheet.create({
     recordHeaderText: {
         textAlign: 'left',
         fontSize: 12,
-        color: '#9F9F9F'
     },
     recordRow: {
         flexDirection: 'row',
@@ -283,7 +278,6 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         paddingHorizontal: 10,
         height: 65,
-        borderColor: '#FFCE7F',
     },
     recordRowText: {
         textAlign: 'left',
