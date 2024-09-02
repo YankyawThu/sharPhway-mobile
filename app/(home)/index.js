@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react"
 import { Image } from 'expo-image'
 import { useScrollToTop } from '@react-navigation/native'
 import { useTheme } from '../../context/theme'
+import { useColorScheme } from 'react-native'
 
 export default function Home() {
     const navigation = useNavigation()
@@ -11,6 +12,7 @@ export default function Home() {
     const [refreshing, setRefreshing] = useState(false)
     const [base, setBase] = useState(true)
     const { theme } = useTheme()
+    const colorScheme = useColorScheme()
 
     useScrollToTop(
         useRef({
@@ -21,20 +23,20 @@ export default function Home() {
     )
 
     const mockData = [
-        {id: 14, currency: 'Baht', sell: 670, buy: 650, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 13, currency: 'Baht', sell: 660, buy: 643, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 12, currency: 'Baht', sell: 665, buy: 650, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 11, currency: 'Baht', sell: 687, buy: 669, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 10, currency: 'Baht', sell: 710.12, buy: 690.12, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 9, currency: 'Baht', sell: 695, buy: 680, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 8, currency: 'Baht', sell: 695, buy: 675, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 7, currency: 'Baht', sell: 670, buy: 650, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 6, currency: 'Baht', sell: 660, buy: 643, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 5, currency: 'Baht', sell: 665, buy: 650, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 4, currency: 'Baht', sell: 687, buy: 669, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 3, currency: 'Baht', sell: 740, buy: 720, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 2, currency: 'Baht', sell: 620, buy: 600, base_amount: 100000, createdAt: 'a few minutes ago'},
-        {id: 1, currency: 'Baht', sell: 540, buy: 520, base_amount: 100000, createdAt: 'a few minutes ago'}
+        {id: 14, currency: 'Baht', sell: 670, buy: 650, base_amount: 100000, createdAt: '16 min ago'},
+        {id: 13, currency: 'Baht', sell: 660, buy: 643, base_amount: 100000, createdAt: '1 hour ago'},
+        {id: 12, currency: 'Baht', sell: 665, buy: 650, base_amount: 100000, createdAt: 'Just now'},
+        {id: 11, currency: 'Baht', sell: 687, buy: 669, base_amount: 100000, createdAt: 'Just now'},
+        {id: 10, currency: 'Baht', sell: 710.12, buy: 690.12, base_amount: 100000, createdAt: 'Just now'},
+        {id: 9, currency: 'Baht', sell: 695, buy: 680, base_amount: 100000, createdAt: 'Just now'},
+        {id: 8, currency: 'Baht', sell: 695, buy: 675, base_amount: 100000, createdAt: 'Just now'},
+        {id: 7, currency: 'Baht', sell: 670, buy: 650, base_amount: 100000, createdAt: 'Just now'},
+        {id: 6, currency: 'Baht', sell: 660, buy: 643, base_amount: 100000, createdAt: 'Just now'},
+        {id: 5, currency: 'Baht', sell: 665, buy: 650, base_amount: 100000, createdAt: 'Just now'},
+        {id: 4, currency: 'Baht', sell: 687, buy: 669, base_amount: 100000, createdAt: 'Just now'},
+        {id: 3, currency: 'Baht', sell: 740, buy: 720, base_amount: 100000, createdAt: 'Just now'},
+        {id: 2, currency: 'Baht', sell: 620, buy: 600, base_amount: 100000, createdAt: 'Just now'},
+        {id: 1, currency: 'Baht', sell: 540, buy: 520, base_amount: 100000, createdAt: 'Just now'}
     ]
 
     const render = ({item}) => {
@@ -54,12 +56,12 @@ export default function Home() {
             }
         })
         return (
-            <View style={[styles.recordRow, {borderColor: theme.colors.border}]} key={item.id}>
+            <View style={[styles.recordRow, {borderColor: theme.colors.color2}]} key={item.id}>
                 <Text style={[styles.recordRowText, {flexBasis: '15%'}]}>{sign}</Text>
                 <Text style={[styles.recordRowText, {flexBasis: '23%'}]}>{rate}</Text>
                 <Text style={[styles.recordRowText, {flexBasis: '20%', color: theme.colors.text}]}>{item.buy}</Text>
                 <Text style={[styles.recordRowText, {flexBasis: '20%', color: theme.colors.text}]}>{item.sell}</Text>
-                <Text style={{width: 90, color: theme.colors.text1, fontSize: 12, flexBasis: '22%'}}>{item.createdAt}</Text>
+                <Text style={{width: 90, color: theme.colors.text1, fontSize: 13, flexBasis: '22%'}}>{item.createdAt}</Text>
             </View>
         )
     }
@@ -93,11 +95,7 @@ export default function Home() {
             <ScrollView ref={ref} refreshControl={refresh} showsVerticalScrollIndicator={false}>
                 <View style={styles.exchangeCard}>
                     <View style={styles.exchangeCardHeader}>
-                        <TouchableOpacity>
-                            <View style={[styles.exchangeCardHeaderLeft, {borderColor: theme.colors.border1}]}>
-                                <Image source={require('../../assets/icons/reverse.svg')} style={styles.reverseIcon} />
-                            </View>
-                        </TouchableOpacity>
+                        <Text style={[styles.exchangeCardHeaderLeft, {color: theme.colors.text}]}>Today</Text>
                         <View style={styles.exchangeCardHeaderRight}>
                             <Image source={require('../../assets/icons/baht.svg')} style={styles.goldIcon} />
                             <Text style={[styles.exchangeCardHeaderRightText, {color: theme.colors.text}]}>760</Text>
@@ -114,6 +112,9 @@ export default function Home() {
                                     <Text style={[styles.exchangeBodyRightText, {color: theme.colors.text}]}>Baht</Text>
                                 </View>
                         </View>
+                        <TouchableOpacity style={[styles.exchangeCardBodyReverse, {backgroundColor: theme.colors.color3}]}>
+                            <Image source={require('../../assets/icons/reverse.svg')} style={styles.reverseIcon} />
+                        </TouchableOpacity>
                         <View style={[styles.exchangeCardBodySend, {backgroundColor: theme.colors.background1}]}>
                             <Text style={[styles.exchangeCardBodyLeftText, {color: theme.colors.text}]}>Send</Text>
                                 <View style={styles.exchangeSendBox}>
@@ -127,7 +128,7 @@ export default function Home() {
                     <View style={styles.recordsHeader}>
                         <Text style={[styles.header2, {color: theme.colors.text}]}>Records</Text>
                         <View style={styles.oldRecordsRight}>
-                            <Text style={[styles.switchBaseText, {color: theme.colors.text1}]}>Base 100000 Ks</Text>
+                            <Text style={[styles.switchBaseText, {color: theme.colors.text}]}>Base 100000 Ks</Text>
                             <Switch style={styles.switchBase} trackColor={{false: '#000000', true: '#F5A524'}} onValueChange={handleBase} value={base} />
                         </View>
                     </View>
@@ -142,15 +143,11 @@ const styles = StyleSheet.create({
     container: {
         flex: '1',
     },
-    header: {
-        fontSize: 30,
-        fontWeight: '700',
-        padding: 10
-    },
     logo: {
         width: 220,
         height: 50,
-        margin: 15
+        marginHorizontal: 15,
+        marginVertical: 10
     },
     exchangeCard: {
         display: 'flex',
@@ -163,10 +160,18 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     exchangeCardHeaderLeft: {
+        fontSize: 25,
+        fontWeight: '600'
+    },
+    exchangeCardBodyReverse: {
+        position: 'absolute',
         width: 40,
         height: 40,
-        borderWidth: 1,
-        borderRadius: '100%',
+        // borderWidth: 1,
+        borderRadius: '50%',
+        top: 50,
+        alignSelf: 'center',
+        zIndex: 1
     },
     reverseIcon: {
         width: 24,
@@ -188,10 +193,13 @@ const styles = StyleSheet.create({
         marginLeft: 4,
     },
     exchangeCardBody: {
+        position: 'relative',
         flexDirection: 'column',
-        gap: 5
+        gap: 10,
+        marginVertical: 5
     },
     exchangeCardBodyLeftText: {
+        fontSize: 17,
         fontWeight: '500'
     },
     exchangeCardBodySend: {
@@ -247,7 +255,7 @@ const styles = StyleSheet.create({
     },
     header2: {
         fontSize: 25,
-        fontWeight: '700',
+        fontWeight: '600',
         paddingVertical: 20
     },
     oldRecordsRight: {
@@ -256,10 +264,9 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     switchBase: {
-        transform: [{scale: 0.6}]
+        transform: [{scale: 0.7}],
     },
     switchBaseText: {
-        fontSize: 12,
     },
     recordHeader: {
         flexDirection: 'row',
@@ -268,7 +275,7 @@ const styles = StyleSheet.create({
     },
     recordHeaderText: {
         textAlign: 'left',
-        fontSize: 12,
+        fontSize: 13
     },
     recordRow: {
         flexDirection: 'row',
@@ -280,6 +287,7 @@ const styles = StyleSheet.create({
         height: 65,
     },
     recordRowText: {
+        fontSize: 15,
         textAlign: 'left',
         fontWeight: '500',
     },

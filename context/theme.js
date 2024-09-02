@@ -14,7 +14,9 @@ export const ThemeProvider = ({children}) => {
             background: '#161616',
             background1: '#31291D',
             text1: '#9F9F9F',
-            border1: '#4A4337'
+            color2: '#404040',
+            color3: '#161616',
+            color4: '#595959',
         }
     }
 
@@ -25,7 +27,9 @@ export const ThemeProvider = ({children}) => {
             background: '#FFFFFF',
             background1: '#FFF5E0',
             text1: '#9F9F9F',
-            border1: '#FFE5BC'
+            color2: '#e8e8e8',
+            color3: '#FFFFFF',
+            color4: '#cfcfcf',
         }
     }
     

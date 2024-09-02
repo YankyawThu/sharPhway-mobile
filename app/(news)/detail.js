@@ -1,13 +1,22 @@
-import { Text, View } from "react-native"
-import { Link, useNavigation } from "expo-router"
+import { Text, View, StyleSheet } from "react-native"
+import { router, useLocalSearchParams} from "expo-router"
 import { useEffect } from "react"
+import { useTheme } from '../../context/theme'
 
 export default function Detail() {
-    const navigation = useNavigation()
+    const { news } = useLocalSearchParams()
+    const data = JSON.parse(news)
+    const { theme } = useTheme()
 
     return (
-        <View>
-            <Text>News detail</Text>
+        <View style={[styles.container, {backgroundColor: theme.colors.background}]}>
+            <Text>News {data.title}</Text>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    }
+})
