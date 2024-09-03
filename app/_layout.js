@@ -45,6 +45,23 @@ export default function TabLayout() {
             }
           }}
         />
+        <Tabs.Screen
+          name="(facts)"
+          options={{
+            headerShown: false,
+            tabBarLabel: 'Facts',
+            tabBarIcon: ({focused, color, size}) => {
+              if(focused) {
+                return (
+                  <Image source={require('../assets/icons/light-active.svg')} style={{ width: 26, height: 26 }} />
+                )
+              }
+              else return (
+                <Image source={require('../assets/icons/light.svg')} style={{ width: 26, height: 26 }} />
+              )
+            }
+          }}
+        />
       </Tabs>
     </ThemeProvider>
   )

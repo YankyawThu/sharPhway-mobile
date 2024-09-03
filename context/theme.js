@@ -17,6 +17,7 @@ export const ThemeProvider = ({children}) => {
             color2: '#404040',
             color3: '#161616',
             color4: '#595959',
+            color5: '#c2c2c2',
         }
     }
 
@@ -30,6 +31,7 @@ export const ThemeProvider = ({children}) => {
             color2: '#e8e8e8',
             color3: '#FFFFFF',
             color4: '#cfcfcf',
+            color5: '#2b2b2b',
         }
     }
     
