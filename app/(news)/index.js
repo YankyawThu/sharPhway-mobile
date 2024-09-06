@@ -88,7 +88,7 @@ export default function News() {
                         <View style={styles.recordRowRightBottom}>
                             <Text style={{color: theme.colors.text1, fontSize: 13}}>{item.createdAt}</Text>
                             <View style={{backgroundColor: theme.colors.text1, width: 4, height: 4, marginHorizontal: 10, borderRadius: '50%'}}></View>
-                            <Text style={{color: theme.colors.text1, fontSize: 13}}>{item.read} mins read</Text>
+                            <Text style={{color: theme.colors.text1, fontSize: 13}}>{item.read} min read</Text>
                         </View>
                     </View>
                     <View style={styles.recordRowLeft}>

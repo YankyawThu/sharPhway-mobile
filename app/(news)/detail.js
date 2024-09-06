@@ -6,6 +6,7 @@ import Header from "../../components/header"
 import { Carousel } from "@ant-design/react-native"
 import { Image } from 'expo-image'
 import Ionicons from '@expo/vector-icons/Ionicons'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 export default function Detail() {
     const { news } = useLocalSearchParams()
@@ -39,7 +40,10 @@ export default function Detail() {
                 <Header theme={theme} />
                 <View style={styles.content}>
                     <Text style={[styles.title, {color: theme.colors.text}]}>{data.title}</Text>
-                    <Text style={{color: theme.colors.text1, fontSize: 13}}>{data.read} mins read</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center', gap: 3}}>
+                        <MaterialCommunityIcons name="timer-sand" size={16} color={theme.colors.text1} />
+                        <Text style={{color: theme.colors.text1, fontSize: 13}}>{data.read} min read</Text>
+                    </View>
                     <View style={styles.newsInfo}>
                         <Carousel autoplay infinite style={styles.wrapper} dotStyle={{borderRadius: 10, height: 3, width: 7, marginHorizontal: 2}} dotActiveStyle={{backgroundColor: '#e1a249', width: 17}}>
                             <Image source={data.img1} style={styles.image} />
